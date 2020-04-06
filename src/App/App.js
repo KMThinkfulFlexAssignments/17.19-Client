@@ -6,7 +6,7 @@ import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 //AddNote COMPONENT HERE
-//AddFOLDER COMPONENT HERE
+//AddFolder COMPONENT HERE
 import Context from '../Context';
 import config from '../config';
 import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
@@ -18,7 +18,7 @@ class App extends Component {
         folders: []
     };
 
-    componentDidMount() {
+    handleUpdateAll = () => {
         Promise.all([
             fetch(`${config.API_Endpoint}notes`),
             fetch(`${config.API_Endpoint}folders`)
@@ -39,37 +39,11 @@ class App extends Component {
           })
           .catch(error => {
             console.error({ error })
-          })
+          })  
     }
 
-    handleAddNote = note => {
-        this.setState({
-            notes: [
-                ...this.state.notes,
-                note
-            ]
-        })
-    }
-
-    handleDeleteNote = noteId => {
-        this.setState({
-            notes: this.state.notes.filter(note => note.id !== noteId)
-        })
-    }
-
-    handleAddFolder = folder => {
-        this.setState({
-            folders: [
-                ...this.state.folders,
-                folder
-            ]
-        })
-    }
-
-    handleDeleteFolder = folderId => {
-        this.setState({
-            folders: this.state.folders.filter(folder => folder.id !== folderId)
-        })
+    componentDidMount() {
+        this.handleUpdateAll()
     }
 
     renderNavRoutes() {
@@ -118,7 +92,7 @@ class App extends Component {
                             const {folderId} = routeProps.match.params;
                             const notesForFolder = getNotesForFolder(
                                 notes,
-                                folderId
+                                parseInt(folderId)
                             );
                             return (
                                 <NoteListMain
@@ -133,7 +107,7 @@ class App extends Component {
                     path="/note/:noteId"
                     render={routeProps => {
                         const {noteId} = routeProps.match.params;
-                        const note = findNote(notes, noteId);
+                        const note = findNote(notes, parseInt(noteId));
                         return <NotePageMain {...routeProps} note={note} />;
                     }}
                 />
@@ -145,10 +119,7 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            addNote: this.handleAddNote,
-            deleteNote: this.handleAddNote,
-            addFolder: this.handleAddFolder,
-            deleteFolder: this.handleDeleteFolder
+            updateAll: this.handleUpdateAll
         }
 
         return (

@@ -37,6 +37,22 @@
   background-color: #102541;
 }
 
+.Folder__delete {
+  background-color: #041a3a;
+  border: 0;
+  color: #bdbcbc;
+  font-size: 12px;
+  position: relative;
+  float: right;
+}
+
+.Folder__delete:hover {
+  background-color: #bd0909;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .NoteListNav__num-notes {
   color: #adadad;
   display: block;

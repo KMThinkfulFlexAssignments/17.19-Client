@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
+import ApiService from '../api-service'
 
+const handleDeleteFolder = folderId => {
+  ApiService.deleteFolder(folderId)
+}
 export default function NoteListNav(props) {
   return (
     <div className='NoteListNav'>
@@ -18,8 +22,13 @@ export default function NoteListNav(props) {
               <span className='NoteListNav__num-notes'>
                 {countNotesForFolder(props.notes, folder.id)}
               </span>
-              {folder.name}
+              {folder.folder_name}
             </NavLink>
+            <button onClick = {() => handleDeleteFolder(folder.id)} className='Folder__delete' type='button'>
+              <FontAwesomeIcon icon='trash-alt' />
+              {' '}
+              remove
+            </button>
           </li>
         )}
       </ul>
