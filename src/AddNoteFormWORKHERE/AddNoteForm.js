@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import ApiService from '../api-service'
+import './AddNoteForm.css'
 
 export default class AddNoteForm extends React.Component {
     state = {
         note_name: '',
         content: '',
-        folderId: null
+        folderId: 1
     }
 
     setNoteName = (name) => {
@@ -17,10 +17,27 @@ export default class AddNoteForm extends React.Component {
         this.setState({ content: content })
     }
 
+    setFolderId = (folderId) => {
+        this.setState({ folderId: folderId })
+    }
+
+    setFolderOptions = () => {
+        return this.props.folders.map(folder => {
+            return <option key={folder.id} value={folder.id}>{folder.folder_name}</option>
+        })
+    }
+
+    buttonTestToRemoveLater = (e) => {
+        e.preventDefault()
+        ApiService.postNote(this.state.note_name, this.state.content, this.state.folderId)
+        //REFRESH
+        .then(this.props.history.push('/'))
+    }
+
     render() {
         return (
             <div className='AddNote'>
-                <h2>Add a Note</h2>
+                <h2 className='FormHeader'>Add a Note</h2>
                 <form className='AddNoteForm'>
                     <label htmlFor="note-name">
                         Note name
@@ -45,6 +62,21 @@ export default class AddNoteForm extends React.Component {
                         onChange={event => {
                             this.setContent(event.target.value)
                         }}
+                    />
+                    <label htmlFor="note-folder">
+                        Folder
+                    </label>
+                    <select name="note-folder" id="note-folder" onChange={event => {
+                        this.setFolderId(event.target.value)
+                    }}>
+                        {this.setFolderOptions()}
+                    </select>
+                    <button
+                        className="submit"
+                        onClick={this.buttonTestToRemoveLater}
+                    >
+                    Submit
+                    </button>
                 </form>
             </div>
         )

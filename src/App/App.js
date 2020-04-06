@@ -5,8 +5,8 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
-//AddNote COMPONENT HERE
-//AddFolder COMPONENT HERE
+import AddNoteForm from '../AddNoteFormWORKHERE/AddNoteForm';
+import AddFolderForm from '../AddFolderFormWORKHERE/AddFolderForm';
 import Context from '../Context';
 import config from '../config';
 import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
@@ -109,6 +109,20 @@ class App extends Component {
                         const {noteId} = routeProps.match.params;
                         const note = findNote(notes, parseInt(noteId));
                         return <NotePageMain {...routeProps} note={note} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path='/add-note'
+                    render={routeProps => {
+                        return <AddNoteForm {...routeProps} folders={folders} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path='/add-folder'
+                    render={routeProps => {
+                        return <AddFolderForm {...routeProps} />;
                     }}
                 />
             </>

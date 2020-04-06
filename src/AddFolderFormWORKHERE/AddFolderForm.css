@@ -1,0 +1,36 @@
+div.AddFolder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2.FormHeader {
+    color: #cacaca;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+label {
+    margin-left: 2%;
+    color: #cacaca;
+}
+
+input {
+    width: 30%;
+    margin: 2%;
+}
+
+button.submit {
+    width: 10%;
+    margin-left: 2%;
+}
+
+button.submit:hover {
+    color: white;
+    background-color: #29862e;
+    cursor: pointer;
+}

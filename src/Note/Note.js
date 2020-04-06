@@ -7,6 +7,7 @@ import ApiService from '../api-service'
 
 const handleDeleteNote = noteId => {
   ApiService.deleteNote(noteId)
+  //REFRESH
 }
 
 export default function Note(props) {

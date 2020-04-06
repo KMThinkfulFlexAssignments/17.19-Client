@@ -8,6 +8,7 @@ import ApiService from '../api-service'
 
 const handleDeleteFolder = folderId => {
   ApiService.deleteFolder(folderId)
+  //REFRESH
 }
 export default function NoteListNav(props) {
   return (
