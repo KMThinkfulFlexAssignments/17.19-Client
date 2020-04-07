@@ -27,7 +27,7 @@ export default class AddNoteForm extends React.Component {
         })
     }
 
-    //claims to run in console.log for handlUpdateAll but the view isnt refreshed
+    //claims to run in console.log for handlUpdateAll but the view isnt refreshed.  This same pattern works in AddFolderForm
     handleSubmit = (e) => {
         e.preventDefault()
         ApiService.postNote(this.state.note_name, this.state.content, this.state.folderId)

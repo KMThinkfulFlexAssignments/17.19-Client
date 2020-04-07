@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 import ApiService from '../api-service'
 
+//this is crashing instead of refreshing
 const handleDeleteNote = noteId => {
   ApiService.deleteNote(noteId)
-  //REFRESH
+  .then(this.props.handleUpdateAll())
 }
 
 export default function Note(props) {

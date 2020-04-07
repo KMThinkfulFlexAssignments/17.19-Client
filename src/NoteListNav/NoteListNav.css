@@ -24,7 +24,7 @@
   display: block;
   font-family: var(--custom-font);
   font-size: 20px;
-  margin: 0 0 8px auto;
+  margin: 0 0 0px auto;
   max-width: 180px;
   padding: 8px 16px;
   text-decoration: none;
@@ -43,7 +43,8 @@
   color: #bdbcbc;
   font-size: 12px;
   position: relative;
-  float: right;
+  left: 80%;
+  margin-bottom: 8px;
 }
 
 .Folder__delete:hover {

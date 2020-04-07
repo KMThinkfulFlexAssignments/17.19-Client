@@ -99,6 +99,7 @@ class App extends Component {
                                 <NoteListMain
                                     {...routeProps}
                                     notes={notesForFolder}
+                                    handleUpdateAll={this.handleUpdateAll}
                                 />
                             );
                         }}
@@ -109,7 +110,7 @@ class App extends Component {
                     render={routeProps => {
                         const {noteId} = routeProps.match.params;
                         const note = findNote(notes, parseInt(noteId));
-                        return <NotePageMain {...routeProps} note={note} />;
+                        return <NotePageMain {...routeProps} note={note} handleUpdateAll={this.handleUpdateAll} />;
                     }}
                 />
                 <Route

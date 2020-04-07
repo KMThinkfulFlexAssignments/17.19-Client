@@ -6,7 +6,7 @@ import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
 import ApiService from '../api-service'
 
-//props is coming up as undefined
+//props is coming up as undefined and crashing
 const handleDeleteFolder = folderId => {
   ApiService.deleteFolder(folderId)
   .then(this.props.handleUpdateAll())
