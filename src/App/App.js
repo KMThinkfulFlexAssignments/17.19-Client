@@ -5,9 +5,8 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
-import AddNoteForm from '../AddNoteFormWORKHERE/AddNoteForm';
-import AddFolderForm from '../AddFolderFormWORKHERE/AddFolderForm';
-import Context from '../Context';
+import AddNoteForm from '../AddNoteForm/AddNoteForm';
+import AddFolderForm from '../AddFolderForm/AddFolderForm';
 import config from '../config';
 import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
 import './App.css';
@@ -19,6 +18,7 @@ class App extends Component {
     };
 
     handleUpdateAll = () => {
+        console.log('handleUpdateAll ran')
         Promise.all([
             fetch(`${config.API_Endpoint}notes`),
             fetch(`${config.API_Endpoint}folders`)
@@ -59,6 +59,7 @@ class App extends Component {
                             <NoteListNav
                                 folders={folders}
                                 notes={notes}
+                                handleUpdateAll={this.handleUpdateAll}
                                 {...routeProps}
                             />
                         )}
@@ -115,14 +116,14 @@ class App extends Component {
                     exact
                     path='/add-note'
                     render={routeProps => {
-                        return <AddNoteForm {...routeProps} folders={folders} />;
+                        return <AddNoteForm {...routeProps} handleUpdateAll={this.handleUpdateAll} folders={folders} />;
                     }}
                 />
                 <Route
                     exact
                     path='/add-folder'
                     render={routeProps => {
-                        return <AddFolderForm {...routeProps} />;
+                        return <AddFolderForm {...routeProps} handleUpdateAll={this.handleUpdateAll}/>;
                     }}
                 />
             </>
@@ -130,14 +131,8 @@ class App extends Component {
     }
 
     render() {
-        const value = {
-            notes: this.state.notes,
-            folders: this.state.folders,
-            updateAll: this.handleUpdateAll
-        }
 
         return (
-            <Context.Provider value={value}>
                 <div className="App">
                     <nav className="App__nav">{this.renderNavRoutes()}</nav>
                     <header className="App__header">
@@ -148,7 +143,6 @@ class App extends Component {
                     </header>
                     <main className="App__main">{this.renderMainRoutes()}</main>
                 </div>
-            </Context.Provider>
         );
     }
 }

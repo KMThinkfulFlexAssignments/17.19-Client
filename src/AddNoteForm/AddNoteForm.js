@@ -27,10 +27,11 @@ export default class AddNoteForm extends React.Component {
         })
     }
 
-    buttonTestToRemoveLater = (e) => {
+    //claims to run in console.log for handlUpdateAll but the view isnt refreshed
+    handleSubmit = (e) => {
         e.preventDefault()
         ApiService.postNote(this.state.note_name, this.state.content, this.state.folderId)
-        //REFRESH
+        .then(this.props.handleUpdateAll())
         .then(this.props.history.push('/'))
     }
 
@@ -73,7 +74,7 @@ export default class AddNoteForm extends React.Component {
                     </select>
                     <button
                         className="submit"
-                        onClick={this.buttonTestToRemoveLater}
+                        onClick={this.handleSubmit}
                     >
                     Submit
                     </button>

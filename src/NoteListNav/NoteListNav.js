@@ -6,23 +6,24 @@ import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
 import ApiService from '../api-service'
 
+//props is coming up as undefined
 const handleDeleteFolder = folderId => {
   ApiService.deleteFolder(folderId)
-  //REFRESH
+  .then(this.props.handleUpdateAll())
 }
 export default function NoteListNav(props) {
   return (
     <div className='NoteListNav'>
       <ul className='NoteListNav__list'>
         {props.folders.map(folder =>
-          <li key={folder.id}>
-            <NavLink
-              className='NoteListNav__folder-link'
-              to={`/folder/${folder.id}`}
-            >
+          <li className='FolderList' key={folder.id}>
               <span className='NoteListNav__num-notes'>
                 {countNotesForFolder(props.notes, folder.id)}
               </span>
+              <NavLink
+              className='NoteListNav__folder-link'
+              to={`/folder/${folder.id}`}
+            >
               {folder.folder_name}
             </NavLink>
             <button onClick = {() => handleDeleteFolder(folder.id)} className='Folder__delete' type='button'>

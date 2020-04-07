@@ -14,7 +14,7 @@ export default class AddFolderForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
         ApiService.postFolder(this.state.folder_name)
-        //REFRESH
+        .then(this.props.handleUpdateAll())
         .then(this.props.history.push('/'))
     }
 
