@@ -4,13 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
-import ApiService from '../api-service'
 
-//props is coming up as undefined and crashing
-const handleDeleteFolder = folderId => {
-  ApiService.deleteFolder(folderId)
-  .then(this.props.handleUpdateAll())
-}
 export default function NoteListNav(props) {
   return (
     <div className='NoteListNav'>
@@ -26,7 +20,7 @@ export default function NoteListNav(props) {
             >
               {folder.folder_name}
             </NavLink>
-            <button onClick = {() => handleDeleteFolder(folder.id)} className='Folder__delete' type='button'>
+            <button onClick = {() => props.handleDeleteFolders(folder.id)} className='Folder__delete' type='button'>
               <FontAwesomeIcon icon='trash-alt' />
               {' '}
               remove

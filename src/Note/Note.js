@@ -3,13 +3,6 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
-import ApiService from '../api-service'
-
-//this is crashing instead of refreshing
-const handleDeleteNote = noteId => {
-  ApiService.deleteNote(noteId)
-  .then(this.props.handleUpdateAll())
-}
 
 export default function Note(props) {
   return (
@@ -19,7 +12,7 @@ export default function Note(props) {
           {props.name}
         </Link>
       </h2>
-      <button onClick = {() => handleDeleteNote(props.id)} className='Note__delete' type='button'>
+      <button onClick = {() => props.handleDeleteNote(props.id)} className='Note__delete' type='button'>
         <FontAwesomeIcon icon='trash-alt' />
         {' '}
         remove

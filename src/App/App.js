@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router';
 import {Route, Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import NoteListNav from '../NoteListNav/NoteListNav';
@@ -8,6 +9,7 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import AddNoteForm from '../AddNoteForm/AddNoteForm';
 import AddFolderForm from '../AddFolderForm/AddFolderForm';
 import config from '../config';
+import ApiService from '../api-service';
 import {getNotesForFolder, findNote, findFolder} from '../notes-helpers';
 import './App.css';
 
@@ -16,6 +18,26 @@ class App extends Component {
         notes: [],
         folders: []
     };
+
+    handleDeleteNote = (noteId) => {
+        let newNotes = this.state.notes.filter(note => note.id !== noteId)
+        ApiService.deleteNote(noteId)
+        .then(this.setState({ notes: newNotes }))
+    }
+
+    handleDeleteFolders = (folderId) => {
+        let newFolders = this.state.folders.filter(folder => folder.id !== folderId)
+        ApiService.deleteFolder(folderId)
+        .then(this.setState({ folders: newFolders }))
+        .then(this.props.history.push('/'))
+    }
+
+    handlePostNote = (note_name, content, folder_id) => {
+        ApiService.postNote(note_name, content, folder_id)
+        .then((response) => response.json())
+        .then((newNote) => this.setState({ notes: [...this.state.notes, newNote] }))
+        .then(this.props.history.push('/'))
+    }
 
     handleUpdateAll = () => {
         console.log('handleUpdateAll ran')
@@ -59,7 +81,7 @@ class App extends Component {
                             <NoteListNav
                                 folders={folders}
                                 notes={notes}
-                                handleUpdateAll={this.handleUpdateAll}
+                                handleDeleteFolders={this.handleDeleteFolders}
                                 {...routeProps}
                             />
                         )}
@@ -99,7 +121,7 @@ class App extends Component {
                                 <NoteListMain
                                     {...routeProps}
                                     notes={notesForFolder}
-                                    handleUpdateAll={this.handleUpdateAll}
+                                    handleDeleteNote={this.handleDeleteNote}
                                 />
                             );
                         }}
@@ -117,7 +139,7 @@ class App extends Component {
                     exact
                     path='/add-note'
                     render={routeProps => {
-                        return <AddNoteForm {...routeProps} handleUpdateAll={this.handleUpdateAll} folders={folders} />;
+                        return <AddNoteForm {...routeProps} handlePostNote={this.handlePostNote} folders={folders} />;
                     }}
                 />
                 <Route
@@ -148,4 +170,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);
