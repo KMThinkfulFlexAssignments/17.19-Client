@@ -39,8 +39,14 @@ class App extends Component {
         .then(this.props.history.push('/'))
     }
 
+    handlePostFolder = (folder_name) => {
+        ApiService.postFolder(folder_name)
+        .then((response) => response.json())
+        .then((newFolder) => this.setState({ folders: [...this.state.folders, newFolder]}))
+        .then(this.props.history.push('/'))
+    }
+
     handleUpdateAll = () => {
-        console.log('handleUpdateAll ran')
         Promise.all([
             fetch(`${config.API_Endpoint}notes`),
             fetch(`${config.API_Endpoint}folders`)
@@ -132,7 +138,7 @@ class App extends Component {
                     render={routeProps => {
                         const {noteId} = routeProps.match.params;
                         const note = findNote(notes, parseInt(noteId));
-                        return <NotePageMain {...routeProps} note={note} handleUpdateAll={this.handleUpdateAll} />;
+                        return <NotePageMain {...routeProps} note={note} handleDeleteNote={this.handleDeleteNote} />;
                     }}
                 />
                 <Route
@@ -146,7 +152,7 @@ class App extends Component {
                     exact
                     path='/add-folder'
                     render={routeProps => {
-                        return <AddFolderForm {...routeProps} handleUpdateAll={this.handleUpdateAll}/>;
+                        return <AddFolderForm {...routeProps} handlePostFolder={this.handlePostFolder}/>;
                     }}
                 />
             </>

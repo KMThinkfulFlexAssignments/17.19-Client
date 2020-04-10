@@ -1,5 +1,4 @@
 import React from 'react'
-import ApiService from '../api-service'
 import './AddFolderForm.css'
 
 export default class AddFolderForm extends React.Component {
@@ -13,9 +12,7 @@ export default class AddFolderForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        ApiService.postFolder(this.state.folder_name)
-        .then(this.props.handleUpdateAll())
-        .then(this.props.history.push('/'))
+        this.props.handlePostFolder(this.state.folder_name)
     }
 
     render() {
