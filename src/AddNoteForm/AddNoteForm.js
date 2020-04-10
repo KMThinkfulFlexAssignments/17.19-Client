@@ -5,7 +5,7 @@ export default class AddNoteForm extends React.Component {
     state = {
         note_name: '',
         content: '',
-        folderId: 1
+        folderId: null
     }
 
     setNoteName = (name) => {
@@ -28,9 +28,11 @@ export default class AddNoteForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        console.log()
         let name = this.state.note_name
         let text = this.state.content
-        if (name.length === 0 || text.length === 0) {
+        let folder = this.state.folderId
+        if (name.length === 0 || text.length === 0 || folder === 0) {
             alert("Please enter a Name and some Content for your note")
         } else {
             this.props.handlePostNote(this.state.note_name, this.state.content, this.state.folderId)  
@@ -72,6 +74,7 @@ export default class AddNoteForm extends React.Component {
                     <select name="note-folder" id="note-folder" onChange={event => {
                         this.setFolderId(event.target.value)
                     }}>
+                        <option value={0}>Select a folder</option>
                         {this.setFolderOptions()}
                     </select>
                     <button
