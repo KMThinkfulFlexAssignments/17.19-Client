@@ -5,7 +5,7 @@ export default class AddNoteForm extends React.Component {
     state = {
         note_name: '',
         content: '',
-        folderId: null
+        folderId: 0
     }
 
     setNoteName = (name) => {
@@ -32,9 +32,12 @@ export default class AddNoteForm extends React.Component {
         let name = this.state.note_name
         let text = this.state.content
         let folder = this.state.folderId
-        if (name.length === 0 || text.length === 0 || folder === 0) {
+        if (name.length === 0 || text.length === 0) {
             alert("Please enter a Name and some Content for your note")
-        } else {
+        } else if (folder === 0) {
+            alert("Please select a folder for your note")
+        }
+        else {
             this.props.handlePostNote(this.state.note_name, this.state.content, this.state.folderId)  
         }
     }
