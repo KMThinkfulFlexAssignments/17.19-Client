@@ -28,7 +28,13 @@ export default class AddNoteForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.handlePostNote(this.state.note_name, this.state.content, this.state.folderId)
+        let name = this.state.note_name
+        let text = this.state.content
+        if (name.length === 0 || text.length === 0) {
+            alert("Please enter a Name and some Content for your note")
+        } else {
+            this.props.handlePostNote(this.state.note_name, this.state.content, this.state.folderId)  
+        }
     }
 
     render() {

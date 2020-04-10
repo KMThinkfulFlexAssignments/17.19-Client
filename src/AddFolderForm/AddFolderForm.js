@@ -12,7 +12,12 @@ export default class AddFolderForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.handlePostFolder(this.state.folder_name)
+        let name = this.state.folder_name
+        if (name.length === 0) {
+            alert("Please enter a Folder name")
+        } else {
+            this.props.handlePostFolder(this.state.folder_name)
+        }
     }
 
     render() {
