@@ -23,6 +23,7 @@ class App extends Component {
         let newNotes = this.state.notes.filter(note => note.id !== noteId)
         ApiService.deleteNote(noteId)
         .then(this.setState({ notes: newNotes }))
+        .then(this.props.history.push('/'))
     }
 
     handleDeleteFolders = (folderId) => {
